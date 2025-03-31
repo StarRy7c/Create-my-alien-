@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Your Own Alien</title>
+    <style>
+        body {
+            background: url('https://source.unsplash.com/1600x900/?space,galaxy') no-repeat center center fixed;
+            background-size: cover;
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: white;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .alien-preview {
+            width: 250px;
+            height: 400px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .alien-part {
+            position: absolute;
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease-in-out;
+        }
+        .alien-part:hover {
+            transform: scale(1.1);
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #00ffcc, #ff00ff);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        select {
+            padding: 5px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Your Own Alien 👽</h1>
+        <div class="alien-preview">
+            <img class="alien-part" id="head" src="https://via.placeholder.com/200x100" alt="Alien Head">
+            <img class="alien-part" id="eyes" src="https://via.placeholder.com/200x50" alt="Alien Eyes">
+            <img class="alien-part" id="arms" src="https://via.placeholder.com/200x70" alt="Alien Arms">
+            <img class="alien-part" id="body" src="https://via.placeholder.com/200x150" alt="Alien Body">
+            <img class="alien-part" id="legs" src="https://via.placeholder.com/200x100" alt="Alien Legs">
+        </div>
+        <div class="controls">
+            <label>Head: <select id="headSelect"></select></label>
+            <label>Eyes: <select id="eyesSelect"></select></label>
+            <label>Arms: <select id="armsSelect"></select></label>
+            <label>Body: <select id="bodySelect"></select></label>
+            <label>Legs: <select id="legsSelect"></select></label>
+        </div>
+        <div class="controls">
+            <button onclick="randomizeAlien()">Randomize</button>
+            <button onclick="downloadAlien()">Download</button>
+        </div>
+    </div>
+    <script>
+        const parts = {
+            head: ['https://via.placeholder.com/200x100/ff0000', 'https://via.placeholder.com/200x100/00ff00', 'https://via.placeholder.com/200x100/0000ff'],
+            eyes: ['https://via.placeholder.com/200x50/ffff00', 'https://via.placeholder.com/200x50/ff00ff', 'https://via.placeholder.com/200x50/00ffff'],
+            arms: ['https://via.placeholder.com/200x70/cccccc', 'https://via.placeholder.com/200x70/999999', 'https://via.placeholder.com/200x70/666666'],
+            body: ['https://via.placeholder.com/200x150/aa00aa', 'https://via.placeholder.com/200x150/00ffaa', 'https://via.placeholder.com/200x150/ff5500'],
+            legs: ['https://via.placeholder.com/200x100/5500aa', 'https://via.placeholder.com/200x100/ff0055', 'https://via.placeholder.com/200x100/00aa55']
+        };function populateSelects() {
+        Object.keys(parts).forEach(part => {
+            const select = document.getElementById(`${part}Select`);
+            parts[part].forEach(image => {
+                const option = document.createElement('option');
+                option.value = image;
+                option.textContent = image.split('/').pop();
+                select.appendChild(option);
+            });
+            select.addEventListener('change', () => {
+                document.getElementById(part).src = select.value;
+            });
+        });
+    }
+
+    function randomizeAlien() {
+        Object.keys(parts).forEach(part => {
+            const randomIndex = Math.floor(Math.random() * parts[part].length);
+            document.getElementById(part).src = parts[part][randomIndex];
+        });
+    }
+
+    function downloadAlien() {
+        alert('Download feature coming soon!');
+    }
+
+    populateSelects();
+</script>
+
+</body>
+</html>
